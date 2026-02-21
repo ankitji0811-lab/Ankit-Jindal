@@ -23,6 +23,7 @@
         "banner_Y7DDjC": {
           "type": "banner",
           "settings": {
+            "banner_image": "shopify://shop_images/generate-hero-banner-image-for-a-clothing-brand.png",
             "heading": "The Gift Guide",
             "description": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
             "button_text": "SHOP NOW",
@@ -54,7 +55,7 @@
         "product_item_nb9HDn": {
           "type": "product_item",
           "settings": {
-            "product": "",
+            "product": "black-leather-bag",
             "icon_position_x": 50,
             "icon_position_y": 50
           }
@@ -62,7 +63,7 @@
         "product_item_QFA7c7": {
           "type": "product_item",
           "settings": {
-            "product": "",
+            "product": "classic-varsity-top",
             "icon_position_x": 50,
             "icon_position_y": 50
           }
@@ -70,7 +71,7 @@
         "product_item_7QbjVr": {
           "type": "product_item",
           "settings": {
-            "product": "",
+            "product": "led-high-tops",
             "icon_position_x": 50,
             "icon_position_y": 50
           }
@@ -78,7 +79,7 @@
         "product_item_UhgfdK": {
           "type": "product_item",
           "settings": {
-            "product": "",
+            "product": "silk-summer-top",
             "icon_position_x": 50,
             "icon_position_y": 50
           }
@@ -86,7 +87,7 @@
         "product_item_i4qPDV": {
           "type": "product_item",
           "settings": {
-            "product": "",
+            "product": "red-sports-tee",
             "icon_position_x": 50,
             "icon_position_y": 50
           }
@@ -94,7 +95,7 @@
         "product_item_ftQrhw": {
           "type": "product_item",
           "settings": {
-            "product": "",
+            "product": "floral-white-top",
             "icon_position_x": 50,
             "icon_position_y": 50
           }
