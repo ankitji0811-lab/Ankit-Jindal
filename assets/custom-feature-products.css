@@ -1,0 +1,577 @@
+/* Custom Feature Products Grid Styles */
+/* Dynamic values set via CSS variables in section's inline <style> tag */
+
+.custom-feature-products {
+  background-color: var(--fp-bg-color, #ffffff);
+  padding: var(--fp-desktop-padding-y, 40px) var(--fp-desktop-padding-x, 40px);
+}
+
+.custom-feature-products__container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ========================================
+     SECTION HEADER
+     ======================================== */
+
+.custom-feature-products__header {
+  margin-bottom: 24px;
+}
+
+.custom-feature-products__heading {
+  font-family: "Georgia", serif;
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--fp-heading-color, #1a1a1a);
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.custom-feature-products__subheading {
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  color: #666666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ========================================
+     PRODUCTS GRID
+     ======================================== */
+
+.custom-feature-products__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--fp-desktop-columns, 3), 1fr);
+  gap: var(--fp-desktop-gap, 16px);
+}
+
+.custom-feature-products__item {
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-feature-products__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.custom-feature-products__image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background-color: #f5f5f5;
+}
+
+.custom-feature-products__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.custom-feature-products__item:hover .custom-feature-products__image {
+  transform: scale(1.05);
+}
+
+/* Placeholder styles */
+.custom-feature-products__placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #e5e5e5;
+}
+
+/* ========================================
+     PLUS ICON BUTTON
+     ======================================== */
+
+.custom-feature-products__icon-btn {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--fp-icon-bg-color, #ffffff);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.custom-feature-products__icon-btn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.custom-feature-products__icon-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.custom-feature-products__icon-plus {
+  height: 20px;
+  width: 20px;
+  color: var(--fp-icon-color, #1a1a1a);
+  line-height: 1;
+  display: flex;
+}
+
+/* ========================================
+     QUICK VIEW MODAL
+     ======================================== */
+
+.fp-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.fp-modal[aria-hidden="false"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.fp-modal__overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  z-index: 0;
+}
+
+.fp-modal__overlay:empty {
+  display: block;
+}
+
+.fp-modal__container {
+  position: relative;
+  background-color: #ffffff;
+  max-width: 380px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.3s ease;
+  z-index: 1;
+  /* Allow dropdown to overflow outside container */
+  overflow: visible;
+}
+
+.fp-modal[aria-hidden="false"] .fp-modal__container {
+  transform: scale(1) translateY(0);
+}
+
+.fp-modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: opacity 0.2s ease;
+  padding: 0;
+}
+
+.fp-modal__close:hover {
+  opacity: 0.6;
+}
+
+.fp-modal__content {
+  padding: 32px 24px 24px;
+}
+
+/* Modal Product Header - Image & Info Side by Side */
+.fp-modal__product-header {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.fp-modal__image-wrapper {
+  width: 100px;
+  height: 120px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: #f5f5f5;
+}
+
+.fp-modal__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Modal Product Info */
+.fp-modal__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.fp-modal__title {
+  font-family: "Arial", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+}
+
+.fp-modal__price {
+  font-family: "Arial", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+}
+
+.fp-modal__description {
+  font-family: "Arial", sans-serif;
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ========================================
+     VARIANT OPTIONS
+     ======================================== */
+
+.fp-modal__options {
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 10;
+}
+
+.fp-modal__option-group {
+  margin-bottom: 16px;
+}
+
+.fp-modal__option-group:last-child {
+  margin-bottom: 0;
+}
+
+.fp-modal__option-label {
+  font-family: "Arial", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #1a1a1a;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Color Selector - Buttons Style */
+.fp-modal__color-options {
+  display: flex;
+  border: 1px solid #1a1a1a;
+}
+
+.fp-modal__color-btn {
+  flex: 1;
+  padding: 14px 20px;
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #1a1a1a;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.fp-modal__color-btn:not(:last-child) {
+  border-right: 1px solid #1a1a1a;
+}
+
+.fp-modal__color-btn:hover:not(.is-selected) {
+  background-color: #f5f5f5;
+}
+
+.fp-modal__color-btn.is-selected {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+/* Size Selector - Dropdown Style */
+.fp-modal__size-select-wrapper {
+  position: relative;
+  border: 1px solid #1a1a1a;
+}
+
+.fp-modal__size-trigger {
+  width: 100%;
+  padding: 14px 50px 14px 20px;
+  background-color: #ffffff;
+  border: none;
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  color: #1a1a1a;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.fp-modal__size-trigger:focus {
+  outline: none;
+}
+
+.fp-modal__size-arrow {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 10px;
+  color: #1a1a1a;
+  transition: transform 0.3s ease;
+}
+
+.fp-modal__size-select-wrapper.is-open .fp-modal__size-arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Size Dropdown Menu */
+.fp-modal__size-dropdown {
+  position: absolute;
+  top: 100%;
+  left: -1px;
+  right: -1px;
+  background-color: #ffffff;
+  border: 1px solid #1a1a1a;
+  border-top: none;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  z-index: 200;
+}
+
+.fp-modal__size-select-wrapper.is-open .fp-modal__size-dropdown {
+  /* Height extends to ATC button bottom (24px form margin + ~56px button) */
+  max-height: calc(24px + 56px + 10px);
+  opacity: 1;
+  overflow-y: auto;
+  /* Hide scrollbar while keeping scroll functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.fp-modal__size-dropdown::-webkit-scrollbar {
+  width: 0;
+  display: none;
+}
+
+.fp-modal__size-option {
+  padding: 12px 20px;
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  color: #1a1a1a;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.25s ease;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.fp-modal__size-option:last-child {
+  border-bottom: none;
+}
+
+.fp-modal__size-option:hover {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.fp-modal__size-option.is-selected {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+/* ========================================
+     ADD TO CART BUTTON
+     ======================================== */
+
+.fp-modal__form {
+  margin-top: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.fp-modal__add-btn {
+  width: 100%;
+  padding: 18px 24px;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-family: "Arial", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.fp-modal__add-btn:hover {
+  background-color: #333333;
+}
+
+.fp-modal__add-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fp-modal__add-btn.loading .fp-modal__add-btn-text,
+.fp-modal__add-btn.loading .fp-modal__add-btn-arrow {
+  opacity: 0;
+}
+
+.fp-modal__add-btn-arrow {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.fp-modal__add-btn:hover .fp-modal__add-btn-arrow {
+  transform: translateX(4px);
+}
+
+.fp-modal__spinner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.fp-modal__spinner.hidden {
+  display: none;
+}
+
+.fp-modal__spinner .spinner {
+  width: 100%;
+  height: 100%;
+}
+
+.fp-modal__error {
+  margin-top: 12px;
+  padding: 10px;
+  background-color: #fee2e2;
+  color: #dc2626;
+  font-size: 12px;
+  text-align: center;
+}
+
+.fp-modal__error.hidden {
+  display: none;
+}
+
+/* ========================================
+     UTILITIES
+     ======================================== */
+
+.hidden {
+  display: none !important;
+}
+
+/* ========================================
+     RESPONSIVE STYLES
+     ======================================== */
+
+@media screen and (max-width: 768px) {
+  .custom-feature-products {
+    padding: var(--fp-mobile-padding-y, 24px) var(--fp-mobile-padding-x, 16px);
+  }
+
+  .custom-feature-products__grid {
+    grid-template-columns: repeat(var(--fp-mobile-columns, 2), 1fr);
+    gap: var(--fp-mobile-gap, 8px);
+  }
+
+  .custom-feature-products__header {
+    margin-bottom: 16px;
+  }
+
+  .custom-feature-products__heading {
+    font-size: 22px;
+  }
+
+  .custom-feature-products__icon-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .custom-feature-products__icon-plus {
+    height: 16px;
+    width: 16px;
+  }
+
+  .fp-modal__container {
+    max-width: 95%;
+    max-height: 85vh;
+  }
+
+  .fp-modal__content {
+    padding: 24px 20px 20px;
+  }
+
+  .fp-modal__image-wrapper {
+    width: 80px;
+    height: 100px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .custom-feature-products__heading {
+    font-size: 18px;
+  }
+
+  .custom-feature-products__icon-btn {
+    width: 24px;
+    height: 24px;
+  }
+
+  .fp-modal__title {
+    font-size: 16px;
+  }
+
+  .fp-modal__price {
+    font-size: 14px;
+  }
+
+  .fp-modal__description {
+    font-size: 11px;
+  }
+}
