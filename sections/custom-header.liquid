@@ -3,7 +3,7 @@
 
 <!-- Custom Sticky Header Section -->
 {% style %}
-  :root {
+  #shopify-section-{{ section.id }} {
     /* Dynamic Settings from Shopify Theme Editor */
     --header-padding-desktop-x: {{ section.settings.desktop_padding_x }}px;
     --header-padding-desktop-y: {{ section.settings.desktop_padding_y }}px;
@@ -85,6 +85,7 @@
 {
   "name": "Custom Header",
   "class": "section-custom-header",
+  "limit": 1,
   "settings": [
     {
       "type": "text",

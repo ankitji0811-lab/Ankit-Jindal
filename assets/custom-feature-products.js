@@ -12,16 +12,16 @@
   let variants = [];
 
   // DOM Elements
-  const modal = document.getElementById("fp-quick-view-modal");
-  const modalImage = document.getElementById("fp-modal-image");
-  const modalTitle = document.getElementById("fp-modal-title");
-  const modalPrice = document.getElementById("fp-modal-price");
-  const modalDescription = document.getElementById("fp-modal-description");
-  const modalOptions = document.getElementById("fp-modal-options");
-  const modalForm = document.getElementById("fp-modal-form");
-  const modalVariantId = document.getElementById("fp-modal-variant-id");
-  const modalAddBtn = document.getElementById("fp-modal-add-btn");
-  const modalError = document.getElementById("fp-modal-error");
+  const modal = document.getElementById("custom-feature-product-quick-view-modal");
+  const modalImage = document.getElementById("custom-feature-product-modal-image");
+  const modalTitle = document.getElementById("custom-feature-product-modal-title");
+  const modalPrice = document.getElementById("custom-feature-product-modal-price");
+  const modalDescription = document.getElementById("custom-feature-product-modal-description");
+  const modalOptions = document.getElementById("custom-feature-product-modal-options");
+  const modalForm = document.getElementById("custom-feature-product-modal-form");
+  const modalVariantId = document.getElementById("custom-feature-product-modal-variant-id");
+  const modalAddBtn = document.getElementById("custom-feature-product-modal-add-btn");
+  const modalError = document.getElementById("custom-feature-product-modal-error");
 
   /**
    * Initialize when DOM is ready
@@ -106,13 +106,13 @@
    */
   function initModalClose() {
     // Close button
-    const closeBtn = modal.querySelector(".fp-modal__close");
+    const closeBtn = modal.querySelector(".custom-feature-product-modal__close");
     if (closeBtn) {
       closeBtn.addEventListener("click", closeModal);
     }
 
     // Overlay click
-    const overlay = modal.querySelector(".fp-modal__overlay");
+    const overlay = modal.querySelector(".custom-feature-product-modal__overlay");
     if (overlay) {
       overlay.addEventListener("click", closeModal);
     }
@@ -170,12 +170,12 @@
     sortedOptions.forEach(function (option, index) {
       const optionName = option.name.toLowerCase();
       const optionGroup = document.createElement("div");
-      optionGroup.className = "fp-modal__option-group";
+      optionGroup.className = "custom-feature-product-modal__option-group";
       optionGroup.dataset.optionIndex = index;
 
       // Label
       const label = document.createElement("label");
-      label.className = "fp-modal__option-label";
+      label.className = "custom-feature-product-modal__option-label";
       label.textContent = option.name;
       optionGroup.appendChild(label);
 
@@ -183,16 +183,46 @@
       if (optionName === "color" || optionName === "colour") {
         // Color buttons
         const colorContainer = document.createElement("div");
-        colorContainer.className = "fp-modal__color-options";
+        colorContainer.className = "custom-feature-product-modal__color-options";
 
         option.values.forEach(function (value, valueIndex) {
           const colorBtn = document.createElement("button");
           colorBtn.type = "button";
-          colorBtn.className = "fp-modal__color-btn";
-          colorBtn.textContent = value;
+          colorBtn.className = "custom-feature-product-modal__color-btn";
           colorBtn.dataset.optionName = option.name;
           colorBtn.dataset.optionValue = value;
           colorBtn.dataset.optionPosition = option.position;
+
+           // Create color tint element
+           const colorTint = document.createElement('span');
+           colorTint.className = 'fp-modal__color-tint';
+           // Map color name to actual color value
+           const colorMap = {
+             'white': '#ffffff',
+             'black': '#000000',
+             'red': '#e53935',
+             'blue': '#1e88e5',
+             'green': '#43a047',
+             'yellow': '#fdd835',
+             'orange': '#fb8c00',
+             'pink': '#ec407a',
+             'purple': '#8e24aa',
+             'grey': '#757575',
+             'gray': '#757575',
+             'brown': '#6d4c41',
+             'navy': '#1a237e',
+             'beige': '#d7ccc8',
+             'cream': '#fffdd0'
+           };
+           const colorValue = value.toLowerCase();
+           colorTint.style.backgroundColor = colorMap[colorValue] || colorValue;
+           colorBtn.appendChild(colorTint);
+ 
+           // Create text span
+           const textSpan = document.createElement('span');
+           textSpan.className = 'fp-modal__color-text';
+           textSpan.textContent = value;
+           colorBtn.appendChild(textSpan);
 
           // Don't select by default - user must choose
 
@@ -207,29 +237,39 @@
       } else {
         // Size or other options - Custom dropdown with scrollable menu
         const sizeWrapper = document.createElement("div");
-        sizeWrapper.className = "fp-modal__size-select-wrapper";
+        sizeWrapper.className = "custom-feature-product-modal__size-select-wrapper";
 
         // Trigger button - Show "Choose your size" as default
         const trigger = document.createElement("button");
         trigger.type = "button";
-        trigger.className = "fp-modal__size-trigger";
-        trigger.textContent = "Choose your " + option.name.toLowerCase();
+        trigger.className = "custom-feature-product-modal__size-trigger";
         trigger.dataset.optionName = option.name;
         trigger.dataset.hasSelection = "false";
 
-        // Arrow
+        // Trigger text
+        const triggerText = document.createElement('span');
+        triggerText.className = 'fp-modal__size-trigger-text';
+        triggerText.textContent = 'Choose your ' + option.name.toLowerCase();
+        trigger.appendChild(triggerText);
+
+        // Arrow wrapper with partition line
+        const arrowWrapper = document.createElement('span');
+        arrowWrapper.className = 'fp-modal__size-arrow-wrapper';
+
+        // Chevron SVG icon
         const arrow = document.createElement("span");
-        arrow.className = "fp-modal__size-arrow";
-        arrow.innerHTML = "&#9660;"; // Down arrow
-        sizeWrapper.appendChild(arrow);
+        arrow.className = "custom-feature-product-modal__size-arrow";
+        arrow.innerHTML = '<svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        arrowWrapper.appendChild(arrow);
+        trigger.appendChild(arrowWrapper);
 
         // Dropdown menu (scrollable)
         const dropdown = document.createElement("div");
-        dropdown.className = "fp-modal__size-dropdown";
+        dropdown.className = "custom-feature-product-modal__size-dropdown";
 
         option.values.forEach(function (value, valueIndex) {
           const optionItem = document.createElement("div");
-          optionItem.className = "fp-modal__size-option";
+          optionItem.className = "custom-feature-product-modal__size-option";
           optionItem.textContent = value;
           optionItem.dataset.optionName = option.name;
           optionItem.dataset.optionValue = value;
@@ -267,7 +307,7 @@
    */
   function selectColorOption(btn, container) {
     // Remove selection from all
-    container.querySelectorAll(".fp-modal__color-btn").forEach(function (b) {
+    container.querySelectorAll(".custom-feature-product-modal__color-btn").forEach(function (b) {
       b.classList.remove("is-selected");
     });
 
@@ -300,7 +340,7 @@
    */
   function closeAllDropdowns() {
     document
-      .querySelectorAll(".fp-modal__size-select-wrapper.is-open")
+      .querySelectorAll(".custom-feature-product-modal__size-select-wrapper.is-open")
       .forEach(function (d) {
         d.classList.remove("is-open");
       });
@@ -313,11 +353,16 @@
     const optionName = optionItem.dataset.optionName;
     const optionValue = optionItem.dataset.optionValue;
 
-    // Update trigger text
-    trigger.textContent = optionValue;
+    // Update trigger text (only the text span, not the whole trigger)
+    const triggerText = trigger.querySelector('.fp-modal__size-trigger-text');
+    if (triggerText) {
+      triggerText.textContent = optionValue;
+    } else {
+      trigger.textContent = optionValue;
+    }
 
     // Update selection state
-    dropdown.querySelectorAll(".fp-modal__size-option").forEach(function (opt) {
+    dropdown.querySelectorAll(".custom-feature-product-modal__size-option").forEach(function (opt) {
       opt.classList.remove("is-selected");
     });
     optionItem.classList.add("is-selected");
@@ -347,7 +392,7 @@
       // Not all options selected yet - keep button enabled but no variant set
       modalVariantId.value = "";
       modalAddBtn.disabled = false;
-      modalAddBtn.querySelector(".fp-modal__add-btn-text").textContent =
+      modalAddBtn.querySelector(".custom-feature-product-modal__add-btn-text").textContent =
         "ADD TO CART";
       return;
     }
@@ -373,11 +418,11 @@
       // Enable/disable button based on availability
       if (matchingVariant.available) {
         modalAddBtn.disabled = false;
-        modalAddBtn.querySelector(".fp-modal__add-btn-text").textContent =
+        modalAddBtn.querySelector(".custom-feature-product-modal__add-btn-text").textContent =
           "ADD TO CART";
       } else {
         modalAddBtn.disabled = true;
-        modalAddBtn.querySelector(".fp-modal__add-btn-text").textContent =
+        modalAddBtn.querySelector(".custom-feature-product-modal__add-btn-text").textContent =
           "SOLD OUT";
       }
     } else {
@@ -424,7 +469,7 @@
     // Disable button and show loading
     modalAddBtn.disabled = true;
     modalAddBtn.classList.add("loading");
-    const spinner = modalAddBtn.querySelector(".fp-modal__spinner");
+    const spinner = modalAddBtn.querySelector(".custom-feature-product-modal__spinner");
     if (spinner) spinner.classList.remove("hidden");
 
     hideError();
@@ -472,7 +517,7 @@
 
     // Check if variant has Black color AND Medium size - for bundle feature
     const shouldAddBundledProduct = checkForBlackMediumVariant();
-    const softWinterJacketVariantId = "51902258381079";
+    const softWinterJacketVariantId = "43093836300331";
 
     // Add to cart request
     fetch(cartAddUrl, config)
@@ -554,7 +599,7 @@
         // Re-enable button
         modalAddBtn.disabled = false;
         modalAddBtn.classList.remove("loading");
-        const spinner = modalAddBtn.querySelector(".fp-modal__spinner");
+        const spinner = modalAddBtn.querySelector(".custom-feature-product-modal__spinner");
         if (spinner) spinner.classList.add("hidden");
       });
   }

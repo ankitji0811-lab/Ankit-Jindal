@@ -3,28 +3,28 @@
 
 <!-- Dynamic CSS Variables from Settings -->
 {% style %}
-  :root {
+  #shopify-section-{{ section.id }} {
     /* Desktop Spacing */
-    --fp-desktop-padding-x: {{ section.settings.desktop_padding_x }}px;
-    --fp-desktop-padding-y: {{ section.settings.desktop_padding_y }}px;
-    --fp-desktop-gap: {{ section.settings.desktop_gap }}px;
-    --fp-desktop-columns: {{ section.settings.desktop_columns }};
+    --custom-feature-product-desktop-padding-x: {{ section.settings.desktop_padding_x }}px;
+    --custom-feature-product-desktop-padding-y: {{ section.settings.desktop_padding_y }}px;
+    --custom-feature-product-desktop-gap: {{ section.settings.desktop_gap }}px;
+    --custom-feature-product-desktop-columns: {{ section.settings.desktop_columns }};
 
     /* Mobile Spacing */
-    --fp-mobile-padding-x: {{ section.settings.mobile_padding_x }}px;
-    --fp-mobile-padding-y: {{ section.settings.mobile_padding_y }}px;
-    --fp-mobile-gap: {{ section.settings.mobile_gap }}px;
-    --fp-mobile-columns: {{ section.settings.mobile_columns }};
+    --custom-feature-product-mobile-padding-x: {{ section.settings.mobile_padding_x }}px;
+    --custom-feature-product-mobile-padding-y: {{ section.settings.mobile_padding_y }}px;
+    --custom-feature-product-mobile-gap: {{ section.settings.mobile_gap }}px;
+    --custom-feature-product-mobile-columns: {{ section.settings.mobile_columns }};
 
     /* Colors */
-    --fp-bg-color: {{ section.settings.background_color }};
-    --fp-heading-color: {{ section.settings.heading_color }};
-    --fp-icon-bg-color: {{ section.settings.icon_bg_color }};
-    --fp-icon-color: {{ section.settings.icon_color }};
+    --custom-feature-product-bg-color: {{ section.settings.background_color }};
+    --custom-feature-product-heading-color: {{ section.settings.heading_color }};
+    --custom-feature-product-icon-bg-color: {{ section.settings.icon_bg_color }};
+    --custom-feature-product-icon-color: {{ section.settings.icon_color }};
   }
 {% endstyle %}
 
-<section class="custom-feature-products" data-section-id="{{ section.id }}">
+<section class="custom-feature-products__wrapper" data-section-id="{{ section.id }}">
   <div class="custom-feature-products__container">
 
     <!-- Section Header -->
@@ -44,77 +44,93 @@
     <!-- Products Grid -->
     <div class="custom-feature-products__grid">
       {% for block in section.blocks %}
-          <div class="custom-feature-products__item" {{ block.shopify_attributes }}>
-            {% if block.settings.product != blank %}
-              {% assign product = block.settings.product %}
-              <div class="custom-feature-products__link">
-                <div class="custom-feature-products__image-wrapper">
-                  {% if block.settings.custom_image != blank %}
-                    <img
-                      src="{{ block.settings.custom_image | image_url: width: 800 }}"
-                      alt="{{ block.settings.custom_image.alt | default: product.title }}"
-                      class="custom-feature-products__image"
-                      loading="lazy"
-                      width="400"
-                      height="500">
-                  {% elsif product.featured_image != blank %}
-                    <img
-                      src="{{ product.featured_image | image_url: width: 800 }}"
-                      alt="{{ product.featured_image.alt | default: product.title }}"
-                      class="custom-feature-products__image"
-                      loading="lazy"
-                      width="400"
-                      height="500">
-                  {% else %}
-                    {{ 'product-1' | placeholder_svg_tag: 'custom-feature-products__placeholder' }}
-                  {% endif %}
-
-                  <!-- Plus Icon Button - Opens Modal -->
-                  <button
-                    class="custom-feature-products__icon-btn"
-                    type="button"
-                    style="
-                      top: {{ block.settings.icon_position_y }}%;
-                      left: {{ block.settings.icon_position_x }}%;
-                    "
-                    aria-label="Quick view {{ product.title }}"
-                    data-product-handle="{{ product.handle }}"
-                    data-product-id="{{ product.id }}"
-                    data-product-url="{{ product.url }}"
-                    data-product-title="{{ product.title }}"
-                    data-product-price="{{ product.price | money }}"
-                    data-product-description="{{ product.description | strip_html | truncate: 150 }}"
-                    data-product-image="{{ product.featured_image | image_url: width: 400 }}"
-                    data-product-variants='{{ product.variants | json }}'
-                    data-product-options='{{ product.options_with_values | json }}'>
-                    <span class="custom-feature-products__icon-plus">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon icon-plus" viewBox="0 0 10 10"><path fill="currentColor" fill-rule="evenodd" d="M1 4.51a.5.5 0 0 0 0 1h3.5l.01 3.5a.5.5 0 0 0 1-.01V5.5l3.5-.01a.5.5 0 0 0-.01-1H5.5L5.49.99a.5.5 0 0 0-1 .01v3.5l-3.5.01z" clip-rule="evenodd"/></svg>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            {% else %}
-              <!-- Placeholder when no product selected -->
-              <div class="custom-feature-products__link">
-                <div class="custom-feature-products__image-wrapper">
+        <div class="custom-feature-products__item" {{ block.shopify_attributes }}>
+          {% if block.settings.product != blank %}
+            {% assign product = block.settings.product %}
+            <div class="custom-feature-products__link">
+              <div class="custom-feature-products__image-wrapper">
+                {% if block.settings.custom_image != blank %}
+                  <img
+                    src="{{ block.settings.custom_image | image_url: width: 800 }}"
+                    alt="{{ block.settings.custom_image.alt | default: product.title }}"
+                    class="custom-feature-products__image"
+                    loading="lazy"
+                    width="400"
+                    height="500">
+                {% elsif product.featured_image != blank %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 800 }}"
+                    alt="{{ product.featured_image.alt | default: product.title }}"
+                    class="custom-feature-products__image"
+                    loading="lazy"
+                    width="400"
+                    height="500">
+                {% else %}
                   {{ 'product-1' | placeholder_svg_tag: 'custom-feature-products__placeholder' }}
-                  <button
-                    class="custom-feature-products__icon-btn"
-                    type="button"
-                    style="
+                {% endif %}
+
+                <!-- Plus Icon Button - Opens Modal -->
+                <button
+                  class="custom-feature-products__icon-btn"
+                  type="button"
+                  style="
                       top: {{ block.settings.icon_position_y }}%;
                       left: {{ block.settings.icon_position_x }}%;
                     "
-                    aria-label="View product"
-                    disabled>
-                    <span class="custom-feature-products__icon-plus">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon icon-plus" viewBox="0 0 10 10"><path fill="currentColor" fill-rule="evenodd" d="M1 4.51a.5.5 0 0 0 0 1h3.5l.01 3.5a.5.5 0 0 0 1-.01V5.5l3.5-.01a.5.5 0 0 0-.01-1H5.5L5.49.99a.5.5 0 0 0-1 .01v3.5l-3.5.01z" clip-rule="evenodd"/></svg>
-                    </span>
-                  </button>
-                </div>
+                  aria-label="Quick view {{ product.title }}"
+                  data-product-handle="{{ product.handle }}"
+                  data-product-id="{{ product.id }}"
+                  data-product-url="{{ product.url }}"
+                  data-product-title="{{ product.title }}"
+                  data-product-price="{{ product.price | money }}"
+                  data-product-description="{{ product.description | strip_html | truncate: 150 }}"
+                  data-product-image="{{ product.featured_image | image_url: width: 400 }}"
+                  data-product-variants='{{ product.variants | json }}'
+                  data-product-options='{{ product.options_with_values | json }}'>
+                  <span class="custom-feature-products__icon-plus">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      class="icon icon-plus"
+                      viewBox="0 0 10 10"><path
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        d="M1 4.51a.5.5 0 0 0 0 1h3.5l.01 3.5a.5.5 0 0 0 1-.01V5.5l3.5-.01a.5.5 0 0 0-.01-1H5.5L5.49.99a.5.5 0 0 0-1 .01v3.5l-3.5.01z"
+                        clip-rule="evenodd" /></svg>
+                  </span>
+                </button>
               </div>
-            {% endif %}
-          </div>
+            </div>
+          {% else %}
+            <!-- Placeholder when no product selected -->
+            <div class="custom-feature-products__link">
+              <div class="custom-feature-products__image-wrapper">
+                {{ 'product-1' | placeholder_svg_tag: 'custom-feature-products__placeholder' }}
+                <button
+                  class="custom-feature-products__icon-btn"
+                  type="button"
+                  style="
+                      top: {{ block.settings.icon_position_y }}%;
+                      left: {{ block.settings.icon_position_x }}%;
+                    "
+                  aria-label="View product"
+                  disabled>
+                  <span class="custom-feature-products__icon-plus">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      class="icon icon-plus"
+                      viewBox="0 0 10 10"><path
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        d="M1 4.51a.5.5 0 0 0 0 1h3.5l.01 3.5a.5.5 0 0 0 1-.01V5.5l3.5-.01a.5.5 0 0 0-.01-1H5.5L5.49.99a.5.5 0 0 0-1 .01v3.5l-3.5.01z"
+                        clip-rule="evenodd" /></svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+          {% endif %}
+        </div>
       {% endfor %}
     </div>
   </div>
@@ -122,13 +138,13 @@
 
 <!-- Quick View Modal -->
 <div
-  class="fp-modal"
-  id="fp-quick-view-modal"
+  class="custom-feature-product-modal"
+  id="custom-feature-product-quick-view-modal"
   aria-hidden="true">
-  <div class="fp-modal__overlay"></div>
-  <div class="fp-modal__container">
+  <div class="custom-feature-product-modal__overlay"></div>
+  <div class="custom-feature-product-modal__container">
     <button
-      class="fp-modal__close"
+      class="custom-feature-product-modal__close"
       type="button"
       aria-label="Close modal">
       <svg
@@ -138,31 +154,35 @@
         viewBox="0 0 18 17"><path fill="currentColor" d="M.865 15.978a.5.5 0 0 0 .707.707l7.433-7.431 7.579 7.282a.501.501 0 0 0 .846-.37.5.5 0 0 0-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 1 0-.707-.708L8.991 7.853 1.413.573a.5.5 0 1 0-.693.72l7.563 7.268z" /></svg>
     </button>
 
-    <div class="fp-modal__content">
+    <div class="custom-feature-product-modal__content">
       <!-- Product Header: Image + Info Side by Side -->
-      <div class="fp-modal__product-header">
-        <div class="fp-modal__image-wrapper">
-          <img src="" alt="" class="fp-modal__image" id="fp-modal-image">
+      <div class="custom-feature-product-modal__product-header">
+        <div class="custom-feature-product-modal__image-wrapper">
+          <img
+            src=""
+            alt=""
+            class="custom-feature-product-modal__image"
+            id="custom-feature-product-modal-image">
         </div>
 
-        <div class="fp-modal__info">
-          <h3 class="fp-modal__title" id="fp-modal-title"></h3>
-          <p class="fp-modal__price" id="fp-modal-price"></p>
-          <p class="fp-modal__description" id="fp-modal-description"></p>
+        <div class="custom-feature-product-modal__info">
+          <h3 class="custom-feature-product-modal__title" id="custom-feature-product-modal-title"></h3>
+          <p class="custom-feature-product-modal__price" id="custom-feature-product-modal-price"></p>
+          <p class="custom-feature-product-modal__description" id="custom-feature-product-modal-description"></p>
         </div>
       </div>
 
       <!-- Variant Options Container -->
-      <div class="fp-modal__options" id="fp-modal-options">
+      <div class="custom-feature-product-modal__options" id="custom-feature-product-modal-options">
         <!-- Options will be dynamically inserted here -->
       </div>
 
       <!-- Add to Cart Form -->
-      <form class="fp-modal__form" id="fp-modal-form">
+      <form class="custom-feature-product-modal__form" id="custom-feature-product-modal-form">
         <input
           type="hidden"
           name="id"
-          id="fp-modal-variant-id"
+          id="custom-feature-product-modal-variant-id"
           value="">
         <input
           type="hidden"
@@ -171,10 +191,10 @@
 
         <button
           type="submit"
-          class="fp-modal__add-btn"
-          id="fp-modal-add-btn">
-          <span class="fp-modal__add-btn-text">ADD TO CART</span>
-          <span class="fp-modal__add-btn-arrow">
+          class="custom-feature-product-modal__add-btn"
+          id="custom-feature-product-modal-add-btn">
+          <span class="custom-feature-product-modal__add-btn-text">ADD TO CART</span>
+          <span class="custom-feature-product-modal__add-btn-arrow">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -185,7 +205,7 @@
                 d="M8.537.808a.5.5 0 0 1 .817-.162l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 1 1-.708-.708L11.793 5.5H1a.5.5 0 0 1 0-1h10.793L8.646 1.354a.5.5 0 0 1-.109-.546"
                 clip-rule="evenodd" /></svg>
           </span>
-          <span class="fp-modal__spinner hidden">
+          <span class="custom-feature-product-modal__spinner hidden">
             <svg
               class="spinner"
               viewBox="0 0 24 24"
@@ -209,7 +229,7 @@
           </span>
         </button>
 
-        <div class="fp-modal__error hidden" id="fp-modal-error"></div>
+        <div class="custom-feature-product-modal__error hidden" id="custom-feature-product-modal-error"></div>
       </form>
     </div>
   </div>
