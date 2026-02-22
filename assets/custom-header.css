@@ -63,6 +63,10 @@
   transition: color 0.4s ease;
 }
 
+.custom-header__cta.disable{
+  opacity: 0.7;
+}
+
 .custom-header__cta::before {
   content: "";
   position: absolute;
@@ -224,6 +228,10 @@
   overflow: hidden;
   z-index: 1;
   transition: color 0.4s ease;
+}
+
+.custom-header__mobile-cta.disable{
+  opacity: 0.7;
 }
 
 .custom-header__mobile-cta::before {

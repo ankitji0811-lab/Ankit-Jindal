@@ -249,7 +249,7 @@ class FeatureQuickView extends HTMLElement {
   }
 
   /* -------------------------
-     ADD TO CART (ATOMIC FIX)
+     ADD TO CART
   ------------------------- */
 
   initForm() {
@@ -287,9 +287,6 @@ class FeatureQuickView extends HTMLElement {
         formData.append("items[1][quantity]", 1);
       }
 
-      /* -------------------------
-         🔥 IMPORTANT: SECTIONS
-      ------------------------- */
       if (cart && typeof cart.getSectionsToRender === "function") {
         formData.append(
           "sections",
