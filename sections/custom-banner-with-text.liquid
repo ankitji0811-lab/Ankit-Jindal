@@ -7,22 +7,27 @@
       <div class="custom-banner-track" data-banner-track>
         {% for block in section.blocks %}
           {%- liquid
-            assign justify_content = 'flex-start'
-            assign align_items = 'flex-end'
-            
+            assign content_position = block.settings.text_position 
+
             case block.settings.text_position
               when 'top-left'
-                assign justify_content = 'flex-start'
-                assign align_items = 'flex-start'
+                assign content_position = 'top-left'
               when 'top-right'
-                assign justify_content = 'flex-end'
-                assign align_items = 'flex-start'
+                assign content_position = 'top-right'
+              when 'top-center'
+                assign content_position = 'top-center'  
               when 'bottom-left'
-                assign justify_content = 'flex-start'
-                assign align_items = 'flex-end'
+                assign content_position = 'bottom-left'
               when 'bottom-right'
-                assign justify_content = 'flex-end'
-                assign align_items = 'flex-end'
+                assign content_position = 'bottom-right'
+              when 'bottom-center'
+                assign content_position = 'bottom-center'
+              when 'middle-left'
+                assign content_position = 'middle-left'
+              when 'middle-right'
+                assign content_position = 'middle-right'
+              when 'middle-center'
+                assign content_position = 'middle-center'   
             endcase
           -%}
           <div class="custom-banner-slide" data-text-position="{{ block.settings.text_position }}" data-text-alignment="{{ block.settings.text_alignment }}" {{ block.shopify_attributes }}>
@@ -57,8 +62,8 @@
                 </div>
               {%- endif -%}
               
-              <div class="custom-banner-content" style="justify-content: {{ justify_content }}; align-items: {{ align_items }}; ">
-                <div class="custom-banner-text-wrapper" style="text-align: {{ block.settings.text_alignment }}; background-color : {{ block.settings.text_content_background_color }}">
+              <div class="custom-banner-content {{ content_position }}">
+                <div class="custom-banner-text-wrapper {{ block.settings.text_alignment }}" style="background-color : {{ block.settings.text_content_background_color }}">
                   {%- if block.settings.heading != blank -%}
                     <h2 class="custom-banner-heading" style="color: {{ block.settings.heading_color }};">{{ block.settings.heading }}</h2>
                   {%- endif -%}
@@ -68,7 +73,7 @@
                   {%- endif -%}
                   
                   {%- if block.settings.button_text != blank -%}
-                    <a href="{{ block.settings.button_link }}" class="custom-banner-button" style="--btn-bg: {{ block.settings.button_bg_color }}; --btn-color: {{ block.settings.button_text_color }};">
+                    <a href="{{ block.settings.button_link }}" class="custom-banner-button {% if block.settings.button_link == blank %}disable{% endif %}" style="--btn-bg: {{ block.settings.button_bg_color }}; --btn-color: {{ block.settings.button_text_color }};">
                       <span>{{ block.settings.button_text }}</span>
                       <span class="button-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon icon-arrow" viewBox="0 0 14 10"><path fill="currentColor" fill-rule="evenodd" d="M8.537.808a.5.5 0 0 1 .817-.162l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 1 1-.708-.708L11.793 5.5H1a.5.5 0 0 1 0-1h10.793L8.646 1.354a.5.5 0 0 1-.109-.546" clip-rule="evenodd"/></svg>
@@ -259,12 +264,32 @@
               "label": "Top Right"
             },
             {
+              "value": "top-center",
+              "label": "Top Center"
+            },
+            {
               "value": "bottom-left",
               "label": "Bottom Left"
             },
             {
               "value": "bottom-right",
               "label": "Bottom Right"
+            },
+            {
+              "value": "bottom-center",
+              "label": "Bottom Center"
+            },
+            {
+              "value": "middle-right",
+              "label": "Middle Right"
+            },
+            {
+              "value": "middle-left",
+              "label": "Middle Left"
+            },
+            {
+              "value": "middle-center",
+              "label": "Middle Center"
             }
           ],
           "default": "bottom-left"
