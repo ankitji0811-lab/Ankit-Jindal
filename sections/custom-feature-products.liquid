@@ -78,15 +78,8 @@
                       left: {{ block.settings.icon_position_x }}%;
                     "
                   aria-label="Quick view {{ product.title }}"
-                  data-product-handle="{{ product.handle }}"
-                  data-product-id="{{ product.id }}"
-                  data-product-url="{{ product.url }}"
-                  data-product-title="{{ product.title }}"
-                  data-product-price="{{ product.price | money }}"
-                  data-product-description="{{ product.description | strip_html | truncate: 150 }}"
-                  data-product-image="{{ product.featured_image | image_url: width: 400 }}"
-                  data-product-variants='{{ product.variants | json }}'
-                  data-product-options='{{ product.options_with_values | json }}'>
+                  data-product-handle='{{ product.handle }}'
+                  data-custom-image="{% if block.settings.custom_image != blank %}{{ block.settings.custom_image | image_url: width: 800 }}{% endif %}">
                   <span class="custom-feature-products__icon-plus">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +130,7 @@
 </section>
 
 <!-- Quick View Modal -->
-<div
+<feature-quick-view
   class="custom-feature-product-modal"
   id="custom-feature-product-quick-view-modal"
   aria-hidden="true">
@@ -233,7 +226,7 @@
       </form>
     </div>
   </div>
-</div>
+</feature-quick-view>
 
 {% schema %}
   {
