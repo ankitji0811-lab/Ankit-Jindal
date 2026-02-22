@@ -84,6 +84,7 @@
 }
 
 .custom-header__cta-arrow {
+  display: flex;
   transition: transform 0.3s ease;
 }
 

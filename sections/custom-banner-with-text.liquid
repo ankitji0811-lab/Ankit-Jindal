@@ -27,14 +27,29 @@
           -%}
           <div class="custom-banner-slide" data-text-position="{{ block.settings.text_position }}" data-text-alignment="{{ block.settings.text_alignment }}" {{ block.shopify_attributes }}>
             <div class="custom-banner-container">
-              {%- if block.settings.banner_image != blank -%}
+              {%- if block.settings.banner_image_desktop != blank -%}
                 <div class="custom-banner-image">
-                  {{ block.settings.banner_image | image_url: width: 1920 | image_tag:
-                    loading: 'lazy',
-                    widths: '375, 550, 750, 1100, 1500, 1920',
-                    sizes: '100vw',
-                    class: 'banner-img'
-                  }}
+                  <picture>
+                    {%- if block.settings.banner_image_mobile != blank -%}
+                      <source
+                        media="(max-width: 749px)"
+                        srcset="
+                          {{ block.settings.banner_image_mobile | image_url: width: 375 }} 375w,
+                          {{ block.settings.banner_image_mobile | image_url: width: 550 }} 550w,
+                          {{ block.settings.banner_image_mobile | image_url: width: 750 }} 750w
+                        "
+                        sizes="100vw">
+                    {%- endif -%}
+                      {{ block.settings.banner_image_desktop
+                        | image_url: width: 1920
+                        | image_tag:
+                          loading: 'lazy',
+                          sizes: '100vw',
+                          widths: '750, 1100, 1500, 1920',
+                          class: 'banner-img'
+                      }}
+
+                  </picture>
                 </div>
               {%- else -%}
                 <div class="custom-banner-image custom-banner-placeholder">
@@ -42,8 +57,8 @@
                 </div>
               {%- endif -%}
               
-              <div class="custom-banner-content" style="justify-content: {{ justify_content }}; align-items: {{ align_items }};">
-                <div class="custom-banner-text-wrapper" style="text-align: {{ block.settings.text_alignment }};">
+              <div class="custom-banner-content" style="justify-content: {{ justify_content }}; align-items: {{ align_items }}; ">
+                <div class="custom-banner-text-wrapper" style="text-align: {{ block.settings.text_alignment }}; background-color : {{ block.settings.text_content_background_color }}">
                   {%- if block.settings.heading != blank -%}
                     <h2 class="custom-banner-heading" style="color: {{ block.settings.heading_color }};">{{ block.settings.heading }}</h2>
                   {%- endif -%}
@@ -157,8 +172,13 @@
         },
         {
           "type": "image_picker",
-          "id": "banner_image",
-          "label": "Banner Image"
+          "id": "banner_image_desktop",
+          "label": "Banner Image Desktop"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image_mobile",
+          "label": "Banner Image Mobile"
         },
         {
           "type": "header",
@@ -175,6 +195,12 @@
           "id": "description",
           "label": "Description",
           "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
+        },
+        {
+          "type": "color_background",
+          "id": "text_content_background_color",
+          "label": "Content background color",
+          "default": "transparent"
         },
         {
           "type": "header",
