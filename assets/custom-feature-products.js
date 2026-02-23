@@ -370,10 +370,8 @@ class FeatureQuickView extends HTMLElement {
   }
 
   formatMoney(cents) {
-    return new Intl.NumberFormat("en", {
-      style: "currency",
-      currency: Shopify.currency.active || "USD",
-    }).format(cents / 100);
+    const amount = (cents / 100).toFixed(2);
+    return `$${amount}`;
   }
 
   showError(msg) {
