@@ -62,7 +62,7 @@
         "heading": "TISSO VISON",
         "sub_heading": "Find the ideal gift for your loved ones.",
         "button_label": "CHOOSE GIFT",
-        "button_url": "",
+        "button_url": "shopify://collections",
         "button_color": "#fff544",
         "button_hover_color": "#000000",
         "background_color": "#f5f5f5",
